@@ -38,11 +38,11 @@
 class BanRedirectEntry
 {
  public:
-	std::string targetchan;
+	std::string targetchannel;
 	std::string banmask;
 
 	BanRedirectEntry(const std::string &target = "", const std::string &mask = "")
-	: targetchan(target), banmask(mask)
+	: targetchannel(target), banmask(mask)
 	{
 	}
 };
@@ -194,7 +194,7 @@ class BanRedirect : public ModeWatcher
 						for (BanRedirectList::iterator redir = redirects->begin(); redir != redirects->end(); ++redir)
 						{
 							// Mimic the functionality used when removing the mode
-							if (irc::equals(redir->targetchan, mask[CHAN]) && irc::equals(redir->banmask, param))
+							if (irc::equals(redir->targetchannel, mask[CHAN]) && irc::equals(redir->banmask, param))
 							{
 								// Make sure the +b handler will still set the right ban
 								param.append(mask[CHAN]);
@@ -221,7 +221,7 @@ class BanRedirect : public ModeWatcher
 
 						for(BanRedirectList::iterator redir = redirects->begin(); redir != redirects->end(); redir++)
 						{
-							if ((irc::equals(redir->targetchan, mask[CHAN])) && (irc::equals(redir->banmask, param)))
+							if ((irc::equals(redir->targetchannel, mask[CHAN])) && (irc::equals(redir->banmask, param)))
 							{
 								redirects->erase(redir);
 
@@ -274,7 +274,7 @@ class ModuleBanRedirect : public Module
 				Modes::ChangeList changelist;
 
 				for(BanRedirectList::iterator i = redirects->begin(); i != redirects->end(); i++)
-					changelist.push_remove(ban, i->targetchan.insert(0, i->banmask));
+					changelist.push_remove(ban, i->targetchannel.insert(0, i->banmask));
 
 				for(BanRedirectList::iterator i = redirects->begin(); i != redirects->end(); i++)
 					changelist.push_add(ban, i->banmask);
@@ -324,7 +324,7 @@ class ModuleBanRedirect : public Module
 							return MOD_RES_DENY;
 
 						/* tell them they're banned and are being transferred */
-						Channel* destchan = ServerInstance->FindChan(redir->targetchan);
+						Channel* destchan = ServerInstance->FindChan(redir->targetchannel);
 						std::string destlimit;
 
 						if (destchan)
@@ -338,9 +338,9 @@ class ModuleBanRedirect : public Module
 						else
 						{
 							user->WriteNumeric(ERR_BANNEDFROMCHAN, chan->name, "Cannot join channel (you're banned)");
-							user->WriteNumeric(470, chan->name, redir->targetchan, "You are banned from this channel, so you are automatically being transferred to the redirected channel.");
+							user->WriteNumeric(470, chan->name, redir->targetchannel, "You are banned from this channel, so you are automatically being transferred to the redirected channel.");
 							nofollow = true;
-							Channel::JoinUser(user, redir->targetchan);
+							Channel::JoinUser(user, redir->targetchannel);
 							nofollow = false;
 							return MOD_RES_DENY;
 						}

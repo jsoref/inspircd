@@ -116,7 +116,7 @@ class ModuleDisable : public Module
 		commands.swap(newcommands);
 
 		// Whether we should fake the non-existence of disabled things.
-		fakenonexistent = tag->getBool("fakenonexistent", tag->getBool("fakenonexistant"));
+		fakenonexistent = tag->getBool("fakenonexistent", tag->getBool("fakenonexistent"));
 
 		// Whether to notify server operators via snomask `a` about the attempted use of disabled commands/modes.
 		notifyopers = tag->getBool("notifyopers");

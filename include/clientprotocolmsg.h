@@ -407,17 +407,17 @@ struct ClientProtocol::Messages::Topic : public ClientProtocol::Message
  */
 class ClientProtocol::Messages::Privmsg : public ClientProtocol::Message
 {
-	void PushTargetChan(char status, const Channel* targetchan)
+	void PushTargetChan(char status, const Channel* targetchannel)
 	{
 		if (status)
 		{
 			std::string rawtarget(1, status);
-			rawtarget.append(targetchan->name);
+			rawtarget.append(targetchannel->name);
 			PushParam(rawtarget);
 		}
 		else
 		{
-			PushParamRef(targetchan->name);
+			PushParamRef(targetchannel->name);
 		}
 	}
 
@@ -458,15 +458,15 @@ class ClientProtocol::Messages::Privmsg : public ClientProtocol::Message
 
 	/** Constructor, user source, user target, copies text.
 	 * @param source Source user.
-	 * @param targetchan Target channel.
+	 * @param targetchannel Target channel.
 	 * @param text Privmsg text, will be copied.
 	 * @param mt Message type.
 	 * @param status Prefix character for status messages. If non-zero the message is a status message. Optional, defaults to 0.
 	 */
-	Privmsg(User* source, const Channel* targetchan, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
+	Privmsg(User* source, const Channel* targetchannel, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
 		: ClientProtocol::Message(CommandStrFromMsgType(mt), source)
 	{
-		PushTargetChan(status, targetchan);
+		PushTargetChan(status, targetchannel);
 		PushParam(text);
 	}
 
@@ -508,15 +508,15 @@ class ClientProtocol::Messages::Privmsg : public ClientProtocol::Message
 
 	/** Constructor, string source, channel target, copies text.
 	 * @param source Source string.
-	 * @param targetchan Target channel.
+	 * @param targetchannel Target channel.
 	 * @param text Privmsg text, will be copied.
 	 * @param status Prefix character for status messages. If non-zero the message is a status message. Optional, defaults to 0.
 	 * @param mt Message type.
 	 */
-	Privmsg(const std::string& source, const Channel* targetchan, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
+	Privmsg(const std::string& source, const Channel* targetchannel, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
 		: ClientProtocol::Message(CommandStrFromMsgType(mt), source)
 	{
-		PushTargetChan(status, targetchan);
+		PushTargetChan(status, targetchannel);
 		PushParam(text);
 	}
 
@@ -548,15 +548,15 @@ class ClientProtocol::Messages::Privmsg : public ClientProtocol::Message
 
 	/** Constructor, user source, channel target, does not copy text.
 	 * @param source Source user.
-	 * @param targetchan Target channel.
+	 * @param targetchannel Target channel.
 	 * @param text Privmsg text, will not be copied.
 	 * @param status Prefix character for status messages. If non-zero the message is a status message. Optional, defaults to 0.
 	 * @param mt Message type.
 	 */
-	Privmsg(NoCopy, User* source, const Channel* targetchan, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
+	Privmsg(NoCopy, User* source, const Channel* targetchannel, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
 		: ClientProtocol::Message(CommandStrFromMsgType(mt), source)
 	{
-		PushTargetChan(status, targetchan);
+		PushTargetChan(status, targetchannel);
 		PushParamRef(text);
 	}
 
@@ -588,15 +588,15 @@ class ClientProtocol::Messages::Privmsg : public ClientProtocol::Message
 
 	/** Constructor, string source, channel target, does not copy text.
 	 * @param source Source string.
-	 * @param targetchan Target channel.
+	 * @param targetchannel Target channel.
 	 * @param text Privmsg text, will not be copied.
 	 * @param status Prefix character for status messages. If non-zero the message is a status message. Optional, defaults to 0.
 	 * @param mt Message type.
 	 */
-	Privmsg(NoCopy, const std::string& source, const Channel* targetchan, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
+	Privmsg(NoCopy, const std::string& source, const Channel* targetchannel, const std::string& text, MessageType mt = MSG_PRIVMSG, char status = 0)
 		: ClientProtocol::Message(CommandStrFromMsgType(mt), source)
 	{
-		PushTargetChan(status, targetchan);
+		PushTargetChan(status, targetchannel);
 		PushParamRef(text);
 	}
 
