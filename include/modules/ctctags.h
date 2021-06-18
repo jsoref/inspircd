@@ -55,10 +55,10 @@ private:
 	}
 
  public:
-	TagMessage(User* source, const Channel* targetchan, const ClientProtocol::TagMap& Tags, char status = 0)
+	TagMessage(User* source, const Channel* targetchannel, const ClientProtocol::TagMap& Tags, char status = 0)
 		: ClientProtocol::Message("TAGMSG", source)
 	{
-		PushTarget(targetchan->name.c_str(), status);
+		PushTarget(targetchannel->name.c_str(), status);
 		AddTags(Tags);
 	}
 
